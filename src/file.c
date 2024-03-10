@@ -19,14 +19,14 @@ int load_file(Buffer* buf) {
     if (cur_char == '\n') {
       cur_line->next = (Line*) malloc(sizeof(Line));
       cur_line->next->buf = (char*) malloc(sizeof(char) * LINE_LENGTH);
+      cur_line->next->end = 0;
       cur_line->next->prev = cur_line;
       cur_line->next->next = NULL;
       cur_line = cur_line->next;
-      buf->num_chars++;
       buf->num_lines++;
-      continue;
+    } else {
+      cur_line->buf[cur_line->end++] = cur_char;
     }
-    cur_line->buf[cur_line->end++] = cur_char;
     buf->num_chars++;
   }
   fclose(file);

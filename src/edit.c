@@ -64,14 +64,17 @@ int run_editor(char* fname) {
         buf->point->line->next = temp;
         buf->point->line = temp;
         buf->point->line->buf = (char*) malloc(sizeof(char) * LINE_LENGTH);
-        buf->point->line->end = 0;
+        memmove(buf->point->line->buf,
+          buf->point->line->prev->buf + buf->point->col,
+          buf->point->line->prev->end - buf->point->col + 1);
+        memset(buf->point->line->prev->buf + buf->point->col,
+          '\0', buf->point->line->prev->end - buf->point->col);
+        buf->point->line->end = buf->point->line->prev->end - buf->point->col;
+        buf->point->line->prev->end = buf->point->col;
         buf->point->col = 0;
         buf->num_lines++;
         buf->cur_line++;
         buf->num_chars++;
-        // buf->buf[buf->end++] = '\n';
-        // buf->point++;
-        // buf->num_lines++;
         break;
       case KEY_LEFT:
         if (buf->point->col == 0 &&
@@ -86,7 +89,7 @@ int run_editor(char* fname) {
         }
         break;
       case KEY_RIGHT:
-        if (buf->point->col >= buf->point->line->end - 1 &&
+        if (buf->point->col + 1 > buf->point->line->end &&
             buf->point->line->next == NULL) {
           break;
         } else if (buf->point->col == buf->point->line->end) {
@@ -119,7 +122,24 @@ int run_editor(char* fname) {
           mvwprintw(infowin->win, 0, 0, "Nothing to delete");
           wrefresh(infowin->win);
         } else if (buf->point->col == 0) {
-          // delete line
+          memmove(buf->point->line->prev->buf + buf->point->line->prev->end,
+            buf->point->line->buf,
+            buf->point->line->end);
+          buf->point->col = buf->point->line->prev->end;
+          buf->point->line->prev->end += buf->point->line->end;
+          buf->point->line->prev->next = buf->point->line->next;
+          if (buf->point->line->next != NULL) {
+            buf->point->line->next->prev = buf->point->line->prev;
+          }
+          Line* temp = buf->point->line;
+          buf->point->line = buf->point->line->prev;
+          free(temp->buf);
+          free(temp);
+          buf->num_chars--;
+          buf->num_lines--;
+          buf->cur_line--;
+          // Also I suppose the line could end up being too long
+          // so I need to go back to variable size buffers
         } else {
           memmove(&buf->point->line->buf[buf->point->col - 1],
             &buf->point->line->buf[buf->point->col],
@@ -129,10 +149,6 @@ int run_editor(char* fname) {
           buf->point->col--;
           buf->num_chars--;
         }
-        // buf->end--;
-        // buf->buf[buf->end] = '\0';
-        // buf->point--;
-        // decrement num_lines
         break;
       default:
         if (cur >= 32 && cur <= 126) {

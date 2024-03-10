@@ -40,9 +40,9 @@ int screen_print() {
   Window* infowin = world->screen->infowin;
   Buffer* buf = world->cur_buffer;
   
-  while (win->top_line_ix > world->cur_buffer->cur_line) {
-    win->top_line = win->top_line->prev;
-    win->top_line_ix--;
+  if (win->top_line_ix > world->cur_buffer->cur_line) {
+    win->top_line = buf->point->line;
+    win->top_line_ix = buf->cur_line;
   }
   
   while (win->top_line_ix + win->height-1 < world->cur_buffer->cur_line) {
@@ -51,7 +51,7 @@ int screen_print() {
   }
 
   Line* cur = win->top_line;
-  int num_digits = floor(log10(world->cur_buffer->num_lines)+1);
+  int num_digits = floor(log10(world->cur_buffer->num_lines+1)+1);
 
   wclear(win->win);
   for (int i = 0; i < win->height; i++) {
