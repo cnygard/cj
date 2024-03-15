@@ -18,7 +18,7 @@ int run_editor(char* fname) {
   // Info panel
   // New Line
   // Can't save?
-  // scrolling correct but bounds are wrong?
+  // crolling correct but bounds are wrong?
   // 
   // Add rpg
 

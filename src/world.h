@@ -13,4 +13,4 @@ struct _World {
 };
 typedef struct _World World;
 
-int world_init();
+World* world_init();

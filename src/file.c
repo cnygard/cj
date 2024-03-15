@@ -16,9 +16,14 @@ int load_file(Buffer* buf) {
   char cur_char = '\0';
   Line* cur_line = buf->first_line;
   while (fscanf(file, "%c", &cur_char) != EOF) {
+    if (cur_line->end >= cur_line->size) {
+      cur_line->buf = (char*) realloc(cur_line->buf, cur_line->size * 2);
+      cur_line->size *= 2;
+    }
     if (cur_char == '\n') {
       cur_line->next = (Line*) malloc(sizeof(Line));
       cur_line->next->buf = (char*) malloc(sizeof(char) * LINE_LENGTH);
+      cur_line->next->size = LINE_LENGTH;
       cur_line->next->end = 0;
       cur_line->next->prev = cur_line;
       cur_line->next->next = NULL;

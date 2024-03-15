@@ -66,12 +66,14 @@ int screen_print() {
   
   wclear(infowin->win);
   mvwprintw(infowin->win, 0, 0, "%s", buf->fname);
-  mvwprintw(infowin->win, 0, 25, "%d %d",
+  mvwprintw(infowin->win, 0, 25, "end:%d top:%d",
     buf->point->line->end,
     world->screen->inputwin->top_line_ix);
-  mvwprintw(infowin->win, 0, 46, "%d",
+  mvwprintw(infowin->win, 0, 40, "y:%d",
     world->screen->inputwin->height);
-  mvwprintw(infowin->win, 0, 53, "%c %d", 
+  mvwprintw(infowin->win, 0, 46, "size:%d",
+    buf->point->line->size);
+  mvwprintw(infowin->win, 0, 60, "%c %d", 
     buf->point->line->buf[buf->point->col],
     buf->point->line->buf[buf->point->col]);
   mvwprintw(infowin->win, 0, 70, "lc(%d,%d)",
