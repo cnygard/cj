@@ -52,6 +52,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-.swp
+*.swp
 .DS_Store
 .vscode
