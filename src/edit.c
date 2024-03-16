@@ -11,14 +11,9 @@ int run_editor(char* fname) {
   Window* infowin = world->screen->infowin;
 
   // TODO:
-  // Realloc buffer if gets too big
   // Separate everything into functions and files
-  // Scrolling needs to be separate from moving point
   // Names are so long
   // Info panel
-  // New Line
-  // Can't save?
-  // scrolling correct but bounds are wrong?
   // 
   // Add rpg
 
@@ -95,6 +90,13 @@ int run_editor(char* fname) {
           buf->cur_line++;
         }
         break;
+      case KEY_RESIZE:
+        getmaxyx(stdscr, world->screen->height, world->screen->width);
+        inputwin->height = world->screen->height - infowin->height;
+        inputwin->width = world->screen->width;
+        mvwin(infowin->win, world->screen->height - 1, 0);
+        wresize(inputwin->win, inputwin->height, inputwin->width);
+        break;
       case 127: // Delete
         if (buf->point->col == 0 && buf->point->line->prev == NULL) {
           wclear(infowin->win);
@@ -139,6 +141,7 @@ int run_editor(char* fname) {
   }
   screen_destroy(world->screen);
   buffer_destroy(buf);
+  free(world);
   // world destroy
   return 0;
 }

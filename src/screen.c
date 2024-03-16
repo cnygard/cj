@@ -20,12 +20,12 @@ Screen* screen_init() {
   keypad(screen->inputwin->win, true);
 
   screen->infowin = (Window*) malloc(sizeof(Window));
-  screen->infowin->height = screen->height - 1;
+  screen->infowin->height = 1;
   screen->infowin->width = screen->width;
   screen->infowin->win = newwin(screen->infowin->height, 0,
     screen->inputwin->height, 0);
   screen->infowin->top_line = NULL;
-  screen->inputwin->top_line_ix = 1;
+  screen->infowin->top_line_ix = 1;
 
   return screen;
 }
@@ -69,7 +69,7 @@ int screen_print() {
   mvwprintw(infowin->win, 0, 25, "end:%d top:%d",
     buf->point->line->end,
     world->screen->inputwin->top_line_ix);
-  mvwprintw(infowin->win, 0, 40, "y:%d",
+  mvwprintw(infowin->win, 0, 40, "h:%d",
     world->screen->inputwin->height);
   mvwprintw(infowin->win, 0, 46, "size:%d",
     buf->point->line->size);
