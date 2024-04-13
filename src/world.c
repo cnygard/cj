@@ -2,12 +2,15 @@
 
 #include "cj.h"
 
-World* world_init() {
-  world = (World*) malloc(sizeof(World));
+World* world_init(int options) {
+  world = (World*) cjalloc(sizeof(World));
 
-  world->cur_buffer = NULL;
-  world->buffer_chain = NULL;
+  world->cur_buffer_holder = NULL;
+  world->buffer_holder_chain = NULL;
 
-  world->screen = screen_init();
+  world->screen = NULL;
+  if (options & WO_SCR) {
+    world->screen = screen_init();
+  }
   return world;
 }

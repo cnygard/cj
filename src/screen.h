@@ -4,7 +4,9 @@
 #include <ncurses.h>
 #include <math.h>
 
-#include "buffer.h"
+#include "cjalloc.h"
+#include "piece_table.h"
+#include "line_table.h"
 
 struct _Window {
   int height;
@@ -24,7 +26,9 @@ struct _Screen {
 };
 typedef struct _Screen Screen;
 
-Screen* screen_init();
+Screen* screen_init(void);
 void screen_destroy(Screen* screen);
 
-int screen_print();
+int screen_print(void);
+int screen_print_pt(void);
+int screen_print_lt(void);

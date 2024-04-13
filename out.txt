@@ -1,0 +1,12 @@
+allocing 24 bytes to 0x600002c9d2c0
+allocing 32 bytes to 0x60000229c300
+allocing 32 bytes to 0x60000229c330
+allocing 64 bytes to 0x600000f9c0f0
+allocing 32 bytes to 0x60000229c360
+allocing 40 bytes to 0x60000229c390
+allocing 128 bytes to 0x600001e9c000
+allocing 24 bytes to 0x600002c9d820
+allocing 32 bytes to 0x60000229c3c0
+allocing 4 bytes to 0x600002e98060
+freeing 24 bytes from 0x600002c9d2c4
+freeing 0 bytes from 0x600002c9d220

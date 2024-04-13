@@ -4,7 +4,8 @@
 
 World* world;
 
-Screen* get_screen();
-Buffer* get_buffer();
-Location* get_point();
-Line* get_line();
+Screen* get_screen(void);
+Buffer_Holder* get_buffer_holder(void);
+void* get_buffer(void);
+void* get_point(void);
+Line* get_line(void);
